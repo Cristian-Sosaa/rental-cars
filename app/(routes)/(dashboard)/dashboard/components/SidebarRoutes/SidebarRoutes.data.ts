@@ -16,16 +16,7 @@ export const dataGeneralSidebar = [
         label: "Favoritos",
         href: "/loved-cars",
     },
-    {
-        icon: ListChecks,
-        label: "Gestion de Autos",
-        href: "/admin/cars-manager",
-    },
-    {
-        icon: ClipboardList,
-        label: "Reservas Registradas",
-        href: "/admin/reservations",
-    },
+
 ];
 
 export const dataAdminSidebar = [
