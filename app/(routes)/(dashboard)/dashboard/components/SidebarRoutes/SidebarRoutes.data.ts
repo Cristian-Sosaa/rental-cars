@@ -28,6 +28,6 @@ export const dataAdminSidebar = [
     {
         icon: ClipboardList,
         label: "Reservas Registradas",
-        href: "/admin/reservations",
+        href: "dashboard/admin/reservations",
     },
 ];
