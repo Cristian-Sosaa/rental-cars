@@ -2,15 +2,8 @@ import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
 import NextTopLoader from "nextjs-toploader";
-
-import {
-  ClerkProvider,
-  //SignInButton,
-  //SignUpButton,
-  //SignedIn,
-  //SignedOut,
-  //UserButton,
-} from '@clerk/nextjs';
+import { ClerkProvider } from "@clerk/nextjs";
+import { Toaster } from "@/components/ui/sonner";
 
 const outfit = Outfit({
   variable: "--font-geist-sans",
@@ -29,11 +22,13 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-    <html lang="en">
-      <body className={outfit.className}>
-        <NextTopLoader color="#000"/>
-        {children}</body>
-    </html>
+      <html lang="en">
+        <body className={outfit.className}>
+          <NextTopLoader color="#000" />
+          {children}
+          <Toaster />
+        </body>
+      </html>
     </ClerkProvider>
   );
 }
