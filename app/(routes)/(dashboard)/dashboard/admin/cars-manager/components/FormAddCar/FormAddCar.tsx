@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { set, useForm } from "react-hook-form";
 import { z } from "zod";
+import axios from "axios";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -25,9 +26,16 @@ import {
 import { UploadButton } from "@/utils/uploadthing";
 import { useState } from "react";
 import { error } from "console";
+import { FormAddCarProps } from "./FormAddCar.types";
+import { Toaster } from "@/components/ui/sonner";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
-export function FormAddCar() {
+export function FormAddCar(props: FormAddCarProps) {
+  const { setOpenDialog } = props;
   const [photoUploade, setphotoUploade] = useState(false);
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -42,11 +50,16 @@ export function FormAddCar() {
       isPublished: false,
     },
   });
-
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    setOpenDialog(false);
+    try {
+      await axios.post("/api/car", values);
+      toast.success("Publicación creada correctamente");
+      router.refresh();
+    } catch (error) {
+      toast.error("Error al crear la publicación", {});
+    }
   };
-
   const { isValid } = form.formState;
 
   return (
@@ -218,14 +231,16 @@ export function FormAddCar() {
               <FormItem>
                 <FormLabel>Precio por día</FormLabel>
                 <FormControl>
-                    <Input placeholder="$70" type="number" {...field} />
+                  <Input placeholder="$70" type="number" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
-        <Button type="submit" className="w-full mt-5" disabled={!isValid}>Crear publicación</Button>
+        <Button type="submit" className="w-full mt-5" disabled={!isValid}>
+          Crear publicación
+        </Button>
       </form>
     </Form>
   );
